@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// model Profile {
+// id        Int      @id @default(autoincrement())
+// name      String
+// bidang    String
+// phone     String?
+// createdAt DateTime @default(now())
+// user      User     @relation(fields: [userId], references: [id])
+// userId    String   @unique
+// }
+model Pegawai {
+  id        Int      @id @default(autoincrement())
+  nama      String   @unique
+  nip       String   @unique
+  jabatan   String
+  bidang    String
+  pangkat   String
+  createdAt DateTime @default(now())
+  // user      User?    @relation(fields: [userId], references: [id])
+  // userId    String?  @unique
+}
+
+model User {
+  id         String   @id @default(cuid())
+  username   String   @unique
+  password   String
+  role       String
+  bidang     String
+  // Profile    Profile?
+  Subkeg     Subkeg[]
+  refreshKey String?  @unique
+  // Pegawai    Pegawai?
+}
+
+model Subkeg {
+  subkegId  String   @id @unique @default(cuid())
+  subkeg    String   @unique
+  author    User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  userId    String
+  Aktfts    Aktfts[]
+}
+
+model Aktfts {
+  aktftsId  String    @id @unique @default(cuid())
+  aktfts    String    @unique
+  subkeg    Subkeg    @relation(fields: [subkegId], references: [subkegId])
+  createdAt DateTime  @default(now())
+  subkegId  String
+  Rincian   Rincian[]
+}
+
+model Rincian {
+  rincianId String   @id @unique @default(cuid())
+  rincian   String
+  vol1      Int
+  sat1      String
+  vol2      Int
+  sat2      String
+  vol3      Int
+  sat3      String
+  aktfts    Aktfts   @relation(fields: [aktftsId], references: [aktftsId])
+  createdAt DateTime @default(now())
+  aktftsId  String
+}
