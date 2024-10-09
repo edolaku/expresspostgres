@@ -4,13 +4,13 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient()
 const EXP_REFRESH_TOKEN = '24h'
-const EXP_ACCESS_TOKEN = '240s'
+const EXP_ACCESS_TOKEN = '5s'
 
 
 
 export const handleRefreshToken = async (req, res) => {
     const cookies = req.cookies
-    console.log("cookies dari refreshTokenController: ", JSON.stringify(cookies));
+    console.log("cookies dari refreshTokenController: ", JSON.stringify(cookies.jwt));
     // console.log("req.headers dari refreshTokenController: ", req.headers);
     if (!cookies?.jwt) return res.sendStatus(401)
     // console.log(cookies.jwt);
@@ -27,7 +27,7 @@ export const handleRefreshToken = async (req, res) => {
 
     // const foundUser = usersDB.users.find(user => user.refreshToken === refreshToken)
     const foundUser = await prisma.user.findFirst({ where: { refreshKey: refreshToken } })
-    console.log("foundUser dari refreshTokenController: ", JSON.stringify(foundUser));
+    // console.log("foundUser dari refreshTokenController: ", JSON.stringify(foundUser?.refreshKey));
     // console.log("edolaku dari refreshTokenController: ", JSON.stringify(edolaku.refreshKey));
 
 
@@ -48,6 +48,7 @@ export const handleRefreshToken = async (req, res) => {
                         username: decoded.username
                     },
                     data: {
+                        // refreshKey: refreshToken
                         refreshKey: null
                     }
                 })
@@ -114,6 +115,6 @@ export const handleRefreshToken = async (req, res) => {
                 role: foundUser.role,
                 bidang: foundUser.bidang
             })
-            // console.log("newRefreshToken dari refreshTokenController: ", newRefreshToken);
+            console.log("newRefreshToken dari refreshTokenController: ", newRefreshToken);
         })
 }
