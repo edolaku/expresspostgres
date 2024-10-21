@@ -123,9 +123,9 @@ export const handleRefreshToken = async (req, res) => {
                     }) // maxAge: 24 hours
                     res.json({
                         accessToken,
-                        role: foundUser.role,
-                        bidang: foundUser.bidang,
-                        username: foundUser.username
+                        // role: foundUser.role,
+                        // bidang: foundUser.bidang,
+                        // username: foundUser.username
                     })
                     // console.log("newRefreshToken dari refreshTokenController: ", newRefreshToken);
                     console.log("accessToken dari refreshTokenController: ", accessToken);

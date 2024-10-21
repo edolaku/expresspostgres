@@ -22,8 +22,8 @@ export const handleLogin = async (req, res) => {
     const match = await bcrypt.compare(password, foundUser.password)
     if (match) {
         // ambil value dari roles:
-        const role = foundUser.role
-        const bidang = foundUser.bidang
+        // const role = foundUser.role
+        // const bidang = foundUser.bidang
         // console.log("roles dari authController",roles);
 
         // create jwt
@@ -77,7 +77,11 @@ export const handleLogin = async (req, res) => {
         }) // maxAge: 24 hours
 
         // kirim access token yg dapat diambil oleh frontend
-        res.json({ accessToken, role, bidang })
+        res.json({
+            accessToken,
+            // role,
+            // bidang
+        })
     } else {
         res.status(401).json({ "message": "password tidak sesuai" })
     }
