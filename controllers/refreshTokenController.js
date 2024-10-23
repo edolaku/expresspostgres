@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 import { PrismaClient } from '@prisma/client';
-import { accessTokenExpiresIn } from './authController';
-import { refreshTokenExpiresIn } from './authController';
+import { accessTokenExpiresIn } from './authController.js';
+import { refreshTokenExpiresIn } from './authController.js';
 
 const prisma = new PrismaClient()
 
