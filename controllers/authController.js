@@ -5,6 +5,10 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient()
 
+export const accessTokenExpiresIn = '8s'
+
+export const refreshTokenExpiresIn = '15s'
+
 export const handleLogin = async (req, res) => {
     const cookies = req.cookies
     console.log("cookies dari authController: ", cookies);
@@ -39,12 +43,12 @@ export const handleLogin = async (req, res) => {
             },
             process.env.ACCESS_TOKEN_SECRET,
             // { expiresIn: '240s' }
-            { expiresIn: '8s' }
+            { expiresIn: accessTokenExpiresIn }
         )
         const newRefreshToken = jwt.sign(
             { "username": foundUser.username },
             process.env.REFRESH_TOKEN_SECRET,
-            { expiresIn: '1d' }
+            { expiresIn: refreshTokenExpiresIn }
             // { expiresIn: '10s' }
         )
 

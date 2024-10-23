@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 import { PrismaClient } from '@prisma/client';
+import { accessTokenExpiresIn } from './authController';
+import { refreshTokenExpiresIn } from './authController';
 
 const prisma = new PrismaClient()
-const EXP_REFRESH_TOKEN = '24h'
-const EXP_ACCESS_TOKEN = '5s'
 
 
 
@@ -97,14 +97,14 @@ export const handleRefreshToken = async (req, res) => {
                             }
                         },
                         process.env.ACCESS_TOKEN_SECRET,
-                        { expiresIn: EXP_ACCESS_TOKEN }
+                        { expiresIn: accessTokenExpiresIn }
                     )
 
                     // generate new refresh token
                     const newRefreshToken = jwt.sign(
                         { "username": foundUser.username },
                         process.env.REFRESH_TOKEN_SECRET,
-                        { expiresIn: EXP_REFRESH_TOKEN }
+                        { expiresIn: refreshTokenExpiresIn }
                     )
 
                     await prisma.user.update({
