@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 
 export const accessTokenExpiresIn = '8s'
 
-export const refreshTokenExpiresIn = '15s'
+export const refreshTokenExpiresIn = '30s'
 
 export const handleLogin = async (req, res) => {
     const cookies = req.cookies
@@ -79,6 +79,8 @@ export const handleLogin = async (req, res) => {
             sameSite: 'None',
             maxAge: 24 * 60 * 60 * 1000
         }) // maxAge: 24 hours
+        console.log('cookie baru dari login authController: ', req.cookies);
+        
 
         // kirim access token yg dapat diambil oleh frontend
         res.json({
