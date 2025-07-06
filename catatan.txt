@@ -1,0 +1,8 @@
+express tutorial dari davegray: Node.js Tutorials for Beginners
+
+react tutorial dari davegray: React Login, Registration, and Authentication
+
+postgres & prisma tutorial dari pojok kode: FULL TUTORIAL PRISMA ORM - BAHASA INDONESIA pojok kode
+
+frontend dg npm run dev
+backend dg nodemon index
