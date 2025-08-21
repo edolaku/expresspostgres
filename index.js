@@ -13,6 +13,7 @@ import { credentials } from "./middleware/credentials.js";
 import corsOptions from "./config/corsOptions.js";
 import refreshTokenRouter from "./routes/refreshTokenRouter.js";
 import logoutRouter from "./routes/logout.js";
+import { logger } from "./middleware/logEvents.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -21,6 +22,7 @@ const prisma = new PrismaClient()
 
 const app = express();
 
+app.use(logger)
 
 // meggunakan cors yg sudah disetting
 // ambil cookies credentials
